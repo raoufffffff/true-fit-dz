@@ -179,7 +179,6 @@ function App() {
                 <option key={i} value={w.code}>{w.ar_name}</option>
               ))}
             </select>
-            <
 
             <div className="flex flex-col gap-2">
               <label className="text-right font-semibold mb-2">اختر المقاس</label>
