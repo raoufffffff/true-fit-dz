@@ -46,7 +46,16 @@ function App() {
       }
     }
   };
-
+  const trackPurchase = () => {
+    try {
+      ReactPixel.track('Purchase', {
+        value: totalPrice,
+        currency: 'DZD'
+      });
+    } catch (error) {
+      console.error('Pixel error:', error);
+    }
+  };
   const postorder = async () => {
     setloading(true);
     seteror(false);
@@ -59,8 +68,7 @@ function App() {
       if (res.data.good) {
         setgood(true);
         // Facebook Pixel event tracking on successful submit
-        ReactPixel.init('983385980322179'); // استبدل بـ Pixel ID الخاص بك
-        ReactPixel.track("buy", "t-shirt 2450 DA");
+        trackPurchase()
 
       } else {
         seteror(true);
