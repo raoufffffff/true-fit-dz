@@ -22,7 +22,7 @@ function App() {
     name: '',
     phone: '',
     state: '',
-    city: '',
+    city: 't',
     size: 'L',
   });
 
@@ -179,18 +179,7 @@ function App() {
                 <option key={i} value={w.code}>{w.ar_name}</option>
               ))}
             </select>
-            <select
-              name="city"
-              value={form.city}
-              onChange={handleChange}
-              required
-              className="p-3 rounded-md border text-black bg-white"
-            >
-              <option value="" disabled>اختر البلدية</option>
-              {etat.map((w, i) => (
-                <option key={i} value={w.name}>{w.ar_name}</option>
-              ))}
-            </select>
+            <
 
             <div className="flex flex-col gap-2">
               <label className="text-right font-semibold mb-2">اختر المقاس</label>
