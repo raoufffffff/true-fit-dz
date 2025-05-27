@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import states from './states';
 import etat from './etat';
 import "swiper/swiper-bundle.css";
+import ReactPixel from 'react-facebook-pixel';
 
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
@@ -15,6 +16,7 @@ function App() {
   const sizeOptions = ['S', 'M', 'L', 'XL', 'XXL'];
   const imgs = ['/img-1.jpg', '/img-2.jpg', '/img-3.jpg'];
   const basePrice = 2450;
+  const [myeata, setetat] = useState([])
   const [good, setgood] = useState(false);
   const [eror, seteror] = useState(false);
   const [loading, setloading] = useState(false);
@@ -22,18 +24,22 @@ function App() {
     name: '',
     phone: '',
     state: '',
-    city: 't',
+    city: '',
     size: 'L',
   });
 
   const [ridePrice, setRidePrice] = useState(0);
   const totalPrice = useMemo(() => basePrice + ridePrice, [ridePrice]);
-
+  useEffect(() => {
+    ReactPixel.init('983385980322179'); // استبدل بـ Pixel ID الخاص بك
+    ReactPixel.pageView();
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-
     if (name === 'state') {
+      let b = etat.filter(a => a.state_code == value)
+      setetat(b)
       const selected = states.find((s) => s.code === value);
       if (selected) {
         setRidePrice(selected.prix_initial);
@@ -53,9 +59,9 @@ function App() {
       if (res.data.good) {
         setgood(true);
         // Facebook Pixel event tracking on successful submit
-        if (window.fbq) {
-          window.fbq('track', 'SubmitApplication');
-        }
+        ReactPixel.init('983385980322179'); // استبدل بـ Pixel ID الخاص بك
+        ReactPixel.track("buy", "t-shirt 2450 DA");
+
       } else {
         seteror(true);
       }
@@ -177,6 +183,18 @@ function App() {
               <option value="" disabled>اختر ولايتك</option>
               {states.map((w, i) => (
                 <option key={i} value={w.code}>{w.ar_name}</option>
+              ))}
+            </select>
+            <select
+              name="city"
+              value={form.city}
+              onChange={handleChange}
+              required
+              className="p-3 rounded-md border text-black bg-white"
+            >
+              <option value="" disabled>اختر البلدية</option>
+              {myeata.map((w, i) => (
+                <option key={i} value={w.name}>{w.ar_name}</option>
               ))}
             </select>
 
