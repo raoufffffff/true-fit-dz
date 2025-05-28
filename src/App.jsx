@@ -31,7 +31,7 @@ function App() {
   const [ridePrice, setRidePrice] = useState(0);
   const totalPrice = useMemo(() => basePrice + ridePrice, [ridePrice]);
   useEffect(() => {
-    ReactPixel.init('9823891491051271'); // استبدل بـ Pixel ID الخاص بك
+    ReactPixel.init('1239232971135599'); // استبدل بـ Pixel ID الخاص بك
     ReactPixel.pageView();
   }, []);
   const handleChange = (e) => {
@@ -48,7 +48,7 @@ function App() {
   };
   const trackPurchase = () => {
     try {
-      ReactPixel.init('9823891491051271'); // استبدل بـ Pixel ID الخاص بك
+      ReactPixel.init('1239232971135599'); // استبدل بـ Pixel ID الخاص بك
       ReactPixel.track('Purchase', {
         value: totalPrice,
         currency: 'DZD'
